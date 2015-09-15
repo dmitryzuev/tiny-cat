@@ -30,6 +30,7 @@
       <%= link_to 'Tiny Cat', root_path, class: 'navbar-brand' %>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
+      <% unless user_signed_in? %>
       <%= form_for(:user, :url => session_path(:user), html: {class: 'navbar-form navbar-right'}) do |f| %>
         <div class="form-group">
           <%= f.text_field :email, class: 'form-control', placeholder: 'E-mail' %>
@@ -39,8 +40,18 @@
         </div>
         <%= f.submit 'Войти', class: 'btn btn-success' %>
       <% end %>
+      <% end %>
   </div>
 </nav>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-offset-md-6">
+      <p class="flash notice bg-success"><%= notice %></p>
+      <p class="flash alert bg-danger"><%= alert %></p>
+    </div>
+  </div>
+</div>
 
 <%= yield %>
 
