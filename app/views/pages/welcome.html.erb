@@ -1,2 +1,20 @@
-<h1>Pages#welcome</h1>
-<p>Find me in app/views/pages/welcome.html.erb</p>
+<div class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <h1>Привет, котаны!</h1>
+        <p>
+          Добро пожаловать в самый лучший <strong>кото</strong>лог. Вы можете
+          спокойно добавлять своих котиков, но только после регистрации.
+
+        </p>
+        <p>
+          <%= link_to 'Регистрация &raquo;'.html_safe, new_user_registration_path,
+                class: 'btn btn-primary btn-lg', role: 'button' %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TODO: Написать отображение котиков -->
