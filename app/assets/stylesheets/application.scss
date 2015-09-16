@@ -27,7 +27,18 @@ body {
   margin-bottom: 60px;
 }
 
-.container.flash, .flash.alert:empty, .flash.notice:empty {
+.container.flashes {
+  padding-top: 0px;
+
+  .flashes {
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+    top: 10px;
+  }
+}
+
+.flash.alert:empty, .flash.notice:empty {
   display: none;
 }
 

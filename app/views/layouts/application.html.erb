@@ -59,14 +59,28 @@
   </div>
 </nav>
 
-<div class="container flash">
+<% if notice || alert %>
+<div class="container flashes">
   <div class="row">
-    <div class="col-md-6 col-offset-md-6">
-      <p class="flash notice bg-success"><%= notice %></p>
-      <p class="flash alert bg-danger"><%= alert %></p>
+    <div class="col-sm-6 col-sm-offset-6">
+      <div class='flashes'>
+        <% if notice %>
+        <div class='flash notice alert alert-success alert-dismissible fade in'>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Закрыть"><span aria-hidden="true">&times;</span></button>
+          <p><%= notice %></p>
+        </div>
+        <% elsif alert %>
+        <div class='flash alert alert-danger alert-dismissible fade in'>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Закрыть"><span aria-hidden="true">&times;</span></button>
+          <p><%= alert %></p>
+        </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
+<% end %>
+
 
 <%= yield %>
 
