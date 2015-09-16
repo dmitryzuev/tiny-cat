@@ -49,7 +49,7 @@ group :development, :test do
   gem 'faker'
 end
 
-group :production, :staging do
+group :production do
   gem 'pg'
   gem 'rails_12factor'
 end
