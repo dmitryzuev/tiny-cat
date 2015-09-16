@@ -1,11 +1,9 @@
+# Products controller. Show, add, edit, delete products by user.
 class ProductsController < ApplicationController
-
   helper UsersHelper
-  
+
   before_action :authenticate_user!, only: [:edit, :update, :destroy]
   before_action :check_access, only: [:edit, :update, :destroy]
-
-  
 
   def index
     @products = Product.all
@@ -24,7 +22,6 @@ class ProductsController < ApplicationController
   end
 
   def create
-    # TODO: Проверка полученных данных
     @product = Product.new(product_params)
     @product.user = current_user
 
@@ -39,7 +36,6 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find(params[:id])
 
-    # TODO: добавить проверку данных
     if @product.update_attributes(product_params)
       redirect_to @product
     else
@@ -50,10 +46,8 @@ class ProductsController < ApplicationController
 
   def destroy
     Product.find(params[:id]).destroy
-    flash[:success] = "User deleted."
     redirect_to products_url
   end
-
 
   protected
 
@@ -66,5 +60,5 @@ class ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:name, :description, :photo)
-  end  
+  end
 end
