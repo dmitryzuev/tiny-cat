@@ -88,6 +88,7 @@
 </div>
 <% end %>
 
+<% unless controller_name == 'pages' %>
 <div class="container">
   <div class="row">
     <div class="col-md-9">
@@ -101,7 +102,9 @@
     </div>
   </div>
 </div>
-
+<% else %>
+<%= yield %>
+<% end %>
 
 <footer class="footer">
   <div class="container">
