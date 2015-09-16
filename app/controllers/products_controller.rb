@@ -43,6 +43,7 @@ class ProductsController < ApplicationController
     if @product.update_attributes(product_params)
       redirect_to @product
     else
+      @error_messages = @product.errors.full_messages
       render 'edit'
     end
   end
