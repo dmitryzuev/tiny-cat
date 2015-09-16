@@ -5,7 +5,7 @@ class Product < ActiveRecord::Base
   validates :photo, presence: true, on: :create
   validates :user, presence: true
 
-  has_attached_file :photo, styles: { medium: '300x300>', thumb: '100x100>' },
+  has_attached_file :photo, styles: { medium: '450x450>', thumb: '100x100#' },
                         default_url: '/images/:style/missing.png',
                         url: '/images/:hash.:extension',
                         hash_secret: 'da9a3c0d2aaf25d6bb627051fd2cf9a4'
