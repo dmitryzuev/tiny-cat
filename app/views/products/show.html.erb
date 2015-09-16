@@ -3,10 +3,25 @@
     <div class='col-md-9'>
       <h1>Котик <%= @product.name %></h1>
 
+<% if current_user == @product.user %>
+<div class="actions btn-group-vertical" role="group">
+  <%= link_to edit_product_path(@product), title: 'Редактировать', class: 'btn btn-default btn-xs' do %>
+  Редактировать <i class="glyphicon glyphicon-pencil"></i>
+  <% end %>
+  <%= link_to product_path(@product), method: 'delete', title: 'Уничтожить', class: 'btn btn-default btn-xs' do %>
+  Уничтожить <i class="glyphicon glyphicon-trash"></i>
+  <% end %>
+</div>
+<% end %>
+
       <%= image_tag @product.photo.url(:medium) %>
 
       <div class='description'>
         <%= @product.description %> 
+      </div>
+
+      <div class="author">
+        <strong>Автор:</strong> <%= (@product.user.name != '') ? @product.user.name : @product.user.email %>
       </div>
     </div>
 

@@ -17,3 +17,15 @@
     }
   }
 }
+
+.actions.btn-group-vertical {
+  position: absolute;
+  right: 0;
+  a {
+    text-align: right;
+  }
+}
+
+.description {
+  padding-top: 24px;
+}
