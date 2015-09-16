@@ -88,9 +88,23 @@
 </div>
 <% end %>
 
-
+<% unless controller_name == 'pages' %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-9">
 <%= yield %>
+    </div>
 
+    <div class="col-md-3 text-right">
+
+      <%= render 'layouts/sidebar' %>
+
+    </div>
+  </div>
+</div>
+<% else %>
+<%= yield %>
+<% end %>
 
 <footer class="footer">
   <div class="container">

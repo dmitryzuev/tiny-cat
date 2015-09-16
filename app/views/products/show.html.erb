@@ -1,7 +1,4 @@
-<div class='container'>
-  <div class='row'>
-    <div class='col-md-9'>
-      <h1>Котик <%= @product.name %></h1>
+<h1>Котик <%= @product.name %></h1>
 
 <% if current_user == @product.user %>
 <div class="actions btn-group-vertical" role="group">
@@ -14,20 +11,13 @@
 </div>
 <% end %>
 
-      <%= image_tag @product.photo.url(:medium) %>
+<%= image_tag @product.photo.url(:medium) %>
 
-      <div class='description'>
-        <%= @product.description %> 
-      </div>
+<div class='description'>
+  <%= @product.description %> 
+</div>
 
-      <div class="author">
-        <strong>Автор:</strong> <%= (@product.user.name != '') ? @product.user.name : @product.user.email %>
-      </div>
-    </div>
-
-    <div class="col-md-3 text-right">
-      <%= render 'sidebar' %>
-    </div>
-  </div>
+<div class="author">
+  <strong>Автор:</strong> <%= (@product.user.name != '') ? @product.user.name : @product.user.email %>
 </div>
 
