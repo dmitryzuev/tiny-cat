@@ -88,8 +88,19 @@
 </div>
 <% end %>
 
-
+<div class="container">
+  <div class="row">
+    <div class="col-md-9">
 <%= yield %>
+    </div>
+
+    <div class="col-md-3 text-right">
+
+      <%= render 'layouts/sidebar' %>
+
+    </div>
+  </div>
+</div>
 
 
 <footer class="footer">
