@@ -1,28 +1,32 @@
-        <%= form_for @product, html: {class: 'form-horizontal', multipart: true} do |f| %>
-        <div class='form-group'>
-          <%= f.label :name, 'Имя котика', class: 'col-sm-2 control-label' %>
-          <div class='col-sm-10'>
-            <%= f.text_field :name, class: 'form-control', placeholder: 'Имя котика' %>
-          </div>
-        </div>
+<%= form_for @product, html: {class: 'form-horizontal', multipart: true} do |f| %>
+<div class='form-group'>
+  <%= f.label :name, 'Имя котика', class: 'col-sm-2 control-label' %>
+  <div class='col-sm-10'>
+    <%= f.text_field :name, class: 'form-control', placeholder: 'Имя котика' %>
+  </div>
+</div>
 
-        <div class='form-group'>
-          <%= f.label :description, 'Описание котика', class: 'col-sm-2 control-label' %>
-          <div class='col-sm-10'>
-            <%= f.text_area :description, class: 'form-control', placeholder: 'Описание котика', rows: 5 %>
-          </div>
-        </div>
+<div class='form-group'>
+  <%= f.label :description, 'Описание котика', class: 'col-sm-2 control-label' %>
+  <div class='col-sm-10'>
+    <%= f.text_area :description, class: 'form-control', placeholder: 'Описание котика', rows: 5 %>
+  </div>
+</div>
 
-        <div class='form-group'>
-          <%= f.label :photo, 'Фото котика', class: 'col-sm-2 control-label' %>
-          <div class='col-sm-10'>
-            <%= f.file_field :photo %>
-          </div>
-        </div>
+<div class='form-group'>
+  <%= f.label :photo, 'Фото котика', class: 'col-sm-2 control-label' %>
+  <div class='col-sm-10'>
+    <%= f.file_field :photo %>
+  </div>
+</div>
 
-        <div class='form-group'>
-          <div class='col-sm-offset-2 col-sm-10'>
-            <%= f.submit 'Добавить котика', class: 'btn btn-success' %>
-          </div>
-        </div>
-      <% end %>
+<div class='form-group'>
+  <div class='col-sm-offset-2 col-sm-10'>
+    <% if action_name == 'new' || action_name == 'create' %>
+      <%= f.submit 'Добавить котика', class: 'btn btn-success' %>
+    <% elsif action_name == 'edit' || action_name == 'update' %>
+      <%= f.submit 'Изменить котика', class: 'btn btn-success' %>
+    <% end %>
+  </div>
+</div>
+<% end %>

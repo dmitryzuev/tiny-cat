@@ -3,10 +3,17 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .products-list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
 
-  .actions {
-    position: absolute;
-    right: 0;
-
+  li {
+    list-style: none;
+    margin-bottom: 25px;
+    min-height: 140px;
+    .actions {
+      position: absolute;
+      right: 0;
+    }
   }
 }

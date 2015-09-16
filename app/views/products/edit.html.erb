@@ -1,4 +1,14 @@
-<h1>Products#edit</h1>
-<p>Find me in app/views/products/edit.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-9">
+      <h1>Редактирование котика <%= @product.name %></h1>
 
-<%= @product.name %>
+      <%= render 'product_form' %>
+
+    </div>
+
+    <div class="col-md-3 text-right">
+      <%= render 'sidebar' %>
+    </div>
+  </div>
+</div>
