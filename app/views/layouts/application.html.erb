@@ -41,7 +41,7 @@
                       title: 'Поделиться котятками' %>
           <%= link_to '<i class="glyphicon glyphicon-log-out"></i>'.html_safe,
                 destroy_user_session_path, class: 'navbar-link',
-                title: 'Уйти прочь' %>
+                title: 'Уйти прочь', method: 'delete' %>
         </p>
       <% else %>
       <%= form_for(:user, :url => session_path(:user), html: 
@@ -59,7 +59,7 @@
   </div>
 </nav>
 
-<div class="container">
+<div class="container flash">
   <div class="row">
     <div class="col-md-6 col-offset-md-6">
       <p class="flash notice bg-success"><%= notice %></p>

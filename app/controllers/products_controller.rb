@@ -1,7 +1,11 @@
 class ProductsController < ApplicationController
+
+  helper UsersHelper
+  
   before_action :authenticate_user!, only: [:edit, :update, :destroy]
   before_action :check_access, only: [:edit, :update, :destroy]
 
+  
 
   def index
     @products = Product.all
@@ -52,6 +56,6 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:name, :description)
+    params.require(:product).permit(:name, :description, :photo)
   end  
 end
