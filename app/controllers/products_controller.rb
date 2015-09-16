@@ -25,13 +25,13 @@ class ProductsController < ApplicationController
 
   def create
     # TODO: Проверка полученных данных
-    # TODO: Вывод ошибок
     @product = Product.new(product_params)
     @product.user = current_user
 
     if @product.valid? && @product.save
       redirect_to @product
     else
+      @error_messages = @product.errors.full_messages
       render 'new'
     end
   end

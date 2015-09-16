@@ -59,7 +59,7 @@
   </div>
 </nav>
 
-<% if notice || alert %>
+<% if notice || alert || @error_messages %>
 <div class="container flashes">
   <div class="row">
     <div class="col-sm-6 col-sm-offset-6">
@@ -69,10 +69,17 @@
           <button type="button" class="close" data-dismiss="alert" aria-label="Закрыть"><span aria-hidden="true">&times;</span></button>
           <p><%= notice %></p>
         </div>
-        <% elsif alert %>
+        <% elsif alert || @error_messages %>
         <div class='flash alert alert-danger alert-dismissible fade in'>
           <button type="button" class="close" data-dismiss="alert" aria-label="Закрыть"><span aria-hidden="true">&times;</span></button>
           <p><%= alert %></p>
+          <% if @error_messages %>
+          <ul>
+            <% @error_messages.each do |msg| %>
+            <li><%= msg %></li>
+            <% end %>
+          </ul>
+          <% end %>
         </div>
         <% end %>
       </div>
