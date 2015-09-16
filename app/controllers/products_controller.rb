@@ -25,18 +25,26 @@ class ProductsController < ApplicationController
 
   def create
     # TODO: Проверка полученных данных
+    # TODO: Вывод ошибок
     @product = Product.new(product_params)
-    
-    redirect_to @product if @product.save
-    render 'new'
+    @product.user = current_user
+
+    if @product.valid? && @product.save
+      redirect_to @product
+    else
+      render 'new'
+    end
   end
 
   def update
     @product = Product.find(params[:id])
 
     # TODO: добавить проверку данных
-    redirect_to @product if @product.update_attributes(product_params)
-    render 'edit'
+    if @product.update_attributes(product_params)
+      redirect_to @product
+    else
+      render 'edit'
+    end
   end
 
   def destroy

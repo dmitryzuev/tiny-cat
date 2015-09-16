@@ -1,6 +1,10 @@
 class Product < ActiveRecord::Base
   belongs_to :user
 
+  validates :name, presence: true, length: {maximum: 42}
+  validates :photo, presence: true, on: :create
+  validates :user, presence: true
+
   has_attached_file :photo, styles: { medium: '300x300>', thumb: '100x100>' },
                         default_url: '/images/:style/missing.png',
                         url: '/images/:hash.:extension',

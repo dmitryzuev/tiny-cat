@@ -1,2 +1,18 @@
-<h1>Products#show</h1>
-<p>Find me in app/views/products/show.html.erb</p>
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-9'>
+      <h1>Котик <%= @product.name %></h1>
+
+      <%= image_tag @product.photo.url(:medium) %>
+
+      <div class='description'>
+        <%= @product.description %> 
+      </div>
+    </div>
+
+    <div class="col-md-3 text-right">
+      <%= render 'sidebar' %>
+    </div>
+  </div>
+</div>
+
