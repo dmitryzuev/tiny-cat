@@ -40,3 +40,4 @@ bower.json
 
 # Ingore spring caches
 /spring
+.env
