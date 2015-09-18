@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
 
   has_many :products
   belongs_to :role
+  has_one :store
 
   before_create :set_default_role
 

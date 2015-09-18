@@ -1,6 +1,7 @@
 # Simple product model. Products has name, description and photo
 class Product < ActiveRecord::Base
   belongs_to :user
+  belongs_to :store
 
   validates :name, presence: true, length: { maximum: 42 }
   validates :photo, presence: true, on: :create
