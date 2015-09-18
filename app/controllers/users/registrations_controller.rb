@@ -3,14 +3,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
 # before_filter :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    @roles_password_length = { 'guest' => 6, 'owner' => 8, 'admin' => 10 }
+    super
+  end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    @roles_password_length = { 'guest' => 6, 'owner' => 8, 'admin' => 10 }
+    super
+  end
 
   # GET /resource/edit
   # def edit
