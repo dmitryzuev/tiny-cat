@@ -42,3 +42,4 @@ bower.json
 /spring
 .env
 .idea/
+rubocop_cache

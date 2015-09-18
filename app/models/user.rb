@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   validates_attachment_content_type :avatar, content_type: %r{/\Aimage\/.*\Z/}
   validates_attachment_size :avatar, less_than: 4.megabytes
 
-  validate :min_password_length
+  validate :password_length
 
   has_many :products
   belongs_to :role
@@ -36,14 +36,12 @@ class User < ActiveRecord::Base
     self.role ||= Role.find_by_name('guest')
   end
 
-  def min_password_length
-    case self.role
-    when Role.find_by_name('guest')
-      errors.add(:password, 'min length is 6') if password.length < 6
-    when Role.find_by_name('owner')
-      errors.add(:password, 'min length is 8') if password.length < 8
-    when Role.find_by_name('admin')
-      errors.add(:password, 'min length is 10') if password.length < 10
-    end
+  def password_length
+    # TODO: move minimum password length to database
+    roles = { 'guest' => 6, 'owner' => 8, 'admin' => 10 }
+    errors.add(
+      :password,
+      "min length is #{roles[role.name]}"
+    ) if password.length < roles[role.name]
   end
 end
