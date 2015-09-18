@@ -41,3 +41,5 @@ bower.json
 # Ingore spring caches
 /spring
 .env
+.idea/
+rubocop_cache
