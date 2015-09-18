@@ -88,7 +88,7 @@
   <div class="form-group">
     <%= f.label :avatar, 'Аватарка', class: 'col-sm-3 control-label' %>
     <div class="col-sm-8">
-      <%= f.file_field :avatar, class: 'form-control' %>
+      <%= f.file_field :avatar, class: 'form-control', id: "user-avatar-#{role}" %>
     </div>
   </div>
 <% end %>
