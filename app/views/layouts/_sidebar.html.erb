@@ -1,40 +1,52 @@
-      <% if user_signed_in? %>
+<% if user_signed_in? %>
 
-      <%= gravatar_for current_user, size: 100, style: 'vertical-align: top; text-align: left' %>
-      <h4>
-        <%= current_user.name != '' ? current_user.name : current_user.email %>
-      </h4>
+<% if %w(owner admin).include? current_user.role.name %>
+  <%= image_tag current_user.avatar.url(:thumb) %>
+<% else %>
+  <%= gravatar_for current_user, size: 100,
+                   style: 'vertical-align: top; text-align: left' %>
+<% end %>
 
-      <ul class="list-unstyled">
-        <li><%= link_to 'Редактировать профиль', '#' %></li>
-        <li><%= link_to 'Добавить котика', new_product_path %></li>
-        <li><%= link_to 'Мои котики', products_path %></li>
-        <li><%= link_to 'Выйти к чертям', destroy_user_session_path, method: 'delete' %></li>
-      </ul>
+<h4>
+  <%= current_user.name != '' ? current_user.name : current_user.email %>
+  <% if %w(owner).include? current_user.role.name %>
+    <br>
+    <%= current_user.store.name %>
+  <% end %>
+</h4>
 
-      <% else %>
+<ul class="list-unstyled">
+  <% if %w(owner).include? current_user.role.name %>
+  <li><%= link_to 'Добавить котика', new_product_path %></li>
+  <% end %>
+  <li><%= link_to 'Все котики', products_path %></li>
+  <li><%= link_to 'Выйти к чертям', destroy_user_session_path,
+                  method: 'delete' %></li>
+</ul>
 
-        <h2>Log in</h2>
+<% else %>
 
-        <%= form_for(:user, url: session_path(:user)) do |f| %>
-          <div class="field">
-            <%= f.label :email %><br />
-            <%= f.email_field :email, autofocus: true %>
-          </div>
+  <h2>Log in</h2>
 
-          <div class="field">
-            <%= f.label :password %><br />
-            <%= f.password_field :password, autocomplete: "off" %>
-          </div>
+  <%= form_for(:user, url: session_path(:user)) do |f| %>
+    <div class="field">
+      <%= f.label :email %><br />
+      <%= f.email_field :email, autofocus: true %>
+    </div>
 
-          <div class="field">
-            <%= f.check_box :remember_me %>
-            <%= f.label :remember_me %>
-          </div>
+    <div class="field">
+      <%= f.label :password %><br />
+      <%= f.password_field :password, autocomplete: "off" %>
+    </div>
 
-          <div class="actions">
-            <%= f.submit "Log in" %>
-          </div>
-        <% end %>
+    <div class="field">
+      <%= f.check_box :remember_me %>
+      <%= f.label :remember_me %>
+    </div>
 
-      <% end %>
+    <div class="actions">
+      <%= f.submit "Log in" %>
+    </div>
+  <% end %>
+
+<% end %>

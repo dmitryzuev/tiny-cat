@@ -42,12 +42,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.for(:sign_up) << [ :role_id,
-                                                  :store_name,
-                                                  :avatar,
-                                                  :name,
-                                                  :passport,
-                                                  :birthdate ]
+    devise_parameter_sanitizer.for(:sign_up) << :role_id
+    devise_parameter_sanitizer.for(:sign_up) << :store_name
+    devise_parameter_sanitizer.for(:sign_up) << :avatar
+    devise_parameter_sanitizer.for(:sign_up) << :name
+    devise_parameter_sanitizer.for(:sign_up) << :passport
+    devise_parameter_sanitizer.for(:sign_up) << :birthdate
   end
 
   # If you have extra params to permit, append them to the sanitizer.
