@@ -25,9 +25,8 @@ class User < ActiveRecord::Base
   # Validations for different user roles
   validate :password_length
   validates :name, presence: true, if: -> { role.name == 'admin' }
-  validates :avatar, presence: true, if: lambda do
-    role.name == 'admin' || role.name == 'owner'
-  end
+  validates :avatar, presence: true,
+            if: -> { %w(admin owner).include? role.name }
   validates :passport, presence: true, if: -> { role.name == 'admin' }
   validates :birthdate, presence: true, if: -> { role.name == 'admin' }
 
