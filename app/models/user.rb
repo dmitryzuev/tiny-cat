@@ -3,14 +3,15 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,
+         password_length: 6..128
 
   # Admin and Owner avatars
   has_attached_file :avatar, styles: { medium: '450x450>', thumb: '100x100#' },
                              default_url: '/images/:style/missing.png',
                              url: '/images/:hash.:extension',
                              hash_secret: 'da9a3c0d2aaf25d6bb627051fd2cf9a4'
-  validates_attachment_content_type :avatar, content_type: %r{/\Aimage\/.*\Z/}
+  validates_attachment_content_type :avatar, content_type: %r/\Aimage\/.*\Z/
   validates_attachment_size :avatar, less_than: 4.megabytes
 
   # Admin passport
@@ -19,8 +20,8 @@ class User < ActiveRecord::Base
                     default_url: '/images/:style/missing.png',
                     url: '/images/:hash.:extension',
                     hash_secret: 'da9a3c0d2aaf25d6bb627051fd2cf9a4'
-  validates_attachment_content_type :avatar, content_type: %r{/\Aimage\/.*\Z/}
-  validates_attachment_size :avatar, less_than: 4.megabytes
+  validates_attachment_content_type :passport, content_type: %r/\Aimage\/.*\Z/
+  validates_attachment_size :passport, less_than: 4.megabytes
 
   # Validations for different user roles
   validate :password_length
@@ -34,7 +35,16 @@ class User < ActiveRecord::Base
   belongs_to :role
   has_one :store
 
-  before_create :set_default_role
+  before_validation :set_default_role, on: :create
+
+  def store_name=(name)
+    create_store(name: name) unless store
+    store.name = name if store
+  end
+
+  def store_name
+    store.name if store
+  end
 
   private
 
