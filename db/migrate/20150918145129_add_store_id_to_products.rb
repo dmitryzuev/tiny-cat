@@ -1,5 +1,5 @@
 class AddStoreIdToProducts < ActiveRecord::Migration
   def change
-    add_column :products, :store, :reference
+    add_reference :products, :store
   end
 end
