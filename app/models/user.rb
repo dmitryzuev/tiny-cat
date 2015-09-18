@@ -3,8 +3,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         password_length: 6..128
+         :recoverable, :rememberable, :trackable, :validatable
 
   # Admin and Owner avatars
   has_attached_file :avatar, styles: { medium: '450x450>', thumb: '100x100#' },
@@ -23,7 +22,14 @@ class User < ActiveRecord::Base
   validates_attachment_content_type :avatar, content_type: %r{/\Aimage\/.*\Z/}
   validates_attachment_size :avatar, less_than: 4.megabytes
 
+  # Validations for different user roles
   validate :password_length
+  validates :name, presence: true, if: -> { role.name == 'admin' }
+  validates :avatar, presence: true, if: lambda do
+    role.name == 'admin' || role.name == 'owner'
+  end
+  validates :passport, presence: true, if: -> { role.name == 'admin' }
+  validates :birthdate, presence: true, if: -> { role.name == 'admin' }
 
   has_many :products
   belongs_to :role
