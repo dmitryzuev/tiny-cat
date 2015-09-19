@@ -11,9 +11,24 @@
 </div>
 <% end %>
 
+<% if user_signed_in? && current_user.is_admin? %>
+  <div class="actions btn-group-vertical" role="group">
+    <%= link_to toggle_pro_product_path(product),
+                title: 'Бро или не бро?',
+                method: 'put',
+                class: 'btn btn-default btn-xs' do %>
+      <i class="glyphicon glyphicon-star"></i>
+    <% end %>
+  </div>
+<% end %>
+
   <%= link_to product do %>
     <%= image_tag product.photo.url(:thumb), alt: product.name, title: product.name %><br> 
-    <strong><%= product.name %></strong>
+    <%= product.name %>
+  <% end %>
+  <% if product.is_pro? %>
+    <br>
+    <strong><i class="glyphicon glyphicon-star"></i> БРО</strong>
   <% end %>
 
 </li>

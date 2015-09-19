@@ -2,9 +2,12 @@ Rails.application.routes.draw do
 
   resources :products
 
+  put 'products/:id/toggle_pro' => 'products#toggle_pro', as: :toggle_pro_product
+
   root 'pages#welcome'
 
-  devise_for :users
+  # devise_for :users
+  devise_for :users, controllers: { registrations: "users/registrations" }
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

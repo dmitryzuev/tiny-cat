@@ -1,0 +1,34 @@
+<h2>Регистрация</h2>
+
+
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+  <li role="presentation"><a href="#guest" aria-controls="guest" role="tab" data-toggle="tab">Гость</a></li>
+  <li role="presentation" class="active"><a href="#owner" aria-controls="owner" role="tab" data-toggle="tab">Владелец котофермы</a></li>
+  <li role="presentation"><a href="#admin" aria-controls="admin" role="tab" data-toggle="tab">Администратор</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane" id="guest">
+    <%= render partial: 'user_form',
+               locals: {
+                       role: 'guest'
+               } %>
+  </div>
+
+  <div role="tabpanel" class="tab-pane active" id="owner">
+    <%= render partial: 'user_form',
+               locals: {
+                       role: 'owner'
+               } %>
+  </div>
+
+  <div role="tabpanel" class="tab-pane" id="admin">
+    <%= render partial: 'user_form',
+               locals: {
+                       role: 'admin'
+               } %>
+  </div>
+</div>
