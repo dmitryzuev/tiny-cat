@@ -11,7 +11,7 @@
 </div>
 <% end %>
 
-<% if user_signed_in? && current_user.is_admin? %>
+<% if user_signed_in? && current_user.admin? %>
   <div class="actions btn-group-vertical" role="group">
     <%= link_to toggle_pro_product_path(product),
                 title: 'Бро или не бро?',
@@ -26,7 +26,7 @@
     <%= image_tag product.photo.url(:thumb), alt: product.name, title: product.name %><br> 
     <%= product.name %>
   <% end %>
-  <% if product.is_pro? %>
+  <% if product.pro? %>
     <br>
     <strong><i class="glyphicon glyphicon-star"></i> БРО</strong>
   <% end %>

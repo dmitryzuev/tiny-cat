@@ -2,9 +2,10 @@
 class ProductsController < ApplicationController
   helper UsersHelper
 
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :authenticate_user!,
+                only: [:new, :create, :edit, :update, :destroy]
   before_action :check_access, only: [:edit, :update, :destroy]
-  before_action :is_owner, only: [:new, :create]
+  before_action :owner?, only: [:new, :create]
 
   def index
     @products = Product.all if user_signed_in?
@@ -47,7 +48,7 @@ class ProductsController < ApplicationController
   end
 
   def toggle_pro
-    redirect_to products_url unless current_user.is_admin?
+    redirect_to products_url unless current_user.admin?
 
     @product = Product.find(params[:id])
     @product.pro = !@product.pro
@@ -67,16 +68,15 @@ class ProductsController < ApplicationController
     redirect_to products_url unless current_user.id == @product.user_id
   end
 
-  def is_owner
-    unless current_user.role.name == 'owner'
-      flash[:error] = 'Только владельцы котоферм могут добавлять котиков'
-      redirect_to products_url
-    end
+  def owner?
+    return true if current_user.owner?
+    flash[:error] = 'Только владельцы котоферм могут добавлять котиков'
+    redirect_to products_url
   end
 
   private
 
   def product_params
-    params.require(:product).permit(:name, :description, :photo, :is_pro)
+    params.require(:product).permit(:name, :description, :photo, :pro)
   end
 end

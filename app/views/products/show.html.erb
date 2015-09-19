@@ -1,4 +1,4 @@
-<% if @product.is_pro? && !user_signed_in? %>
+<% if @product.pro? && !user_signed_in? %>
 
   <h1>Вы должны быть
     <%= link_to 'зарегистрированы', new_user_registration_path %>
@@ -9,7 +9,7 @@
 
 <h1>
   Котик <%= @product.name %>
-  <% if @product.is_pro? %>
+  <% if @product.pro? %>
     <i class="glyphicon glyphicon-star"></i> БРО
   <% end %>
 </h1>
@@ -25,13 +25,13 @@
 </div>
 <% end %>
 
-<% if user_signed_in? && current_user.is_admin? %>
+<% if user_signed_in? && current_user.admin? %>
 <div class="actions btn-group-vertical" role="group">
   <%= link_to toggle_pro_product_path(@product),
               title: 'Сделать про',
               method: 'put',
               class: 'btn btn-default btn-xs' do %>
-    <% if @product.is_pro? %>
+    <% if @product.pro? %>
       Не бро
     <% else %>
       Бро
@@ -51,7 +51,7 @@
   <strong>Автор:</strong> <%= (@product.user.name != '') ? @product.user.name : @product.user.email %>
 </div>
 
-<% if user_signed_in? && (current_user.is_admin? || current_user.is_owner?) %>
+<% if user_signed_in? && (current_user.admin? || current_user.owner?) %>
 <div class="author-shop">
   <strong>Котоферма:</strong> <%= @product.user.store_name %>
 </div>

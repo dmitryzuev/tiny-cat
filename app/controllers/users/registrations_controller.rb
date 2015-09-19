@@ -1,18 +1,19 @@
+# User Registrations controller from Devise
 class Users::RegistrationsController < Devise::RegistrationsController
-  before_filter :configure_sign_up_params, only: [:create]
-  before_filter :configure_account_update_params, only: [:update]
+  before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_account_update_params, only: [:update]
 
   before_action :set_roles_password_length
 
   # GET /resource/sign_up
-  #def new
-  #  super
-  #end
+  # def new
+  #   super
+  # end
 
   # POST /resource
-  #def create
-  #  super
-  #end
+  # def create
+  #   super
+  # end
 
   # GET /resource/edit
   def edit
@@ -47,22 +48,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.for(:sign_up) << :role_id
-    devise_parameter_sanitizer.for(:sign_up) << :store_name
-    devise_parameter_sanitizer.for(:sign_up) << :avatar
-    devise_parameter_sanitizer.for(:sign_up) << :name
-    devise_parameter_sanitizer.for(:sign_up) << :passport
-    devise_parameter_sanitizer.for(:sign_up) << :birthdate
+    devise_parameter_sanitizer.for(:sign_up) << [:role_id,
+                                                 :store_name,
+                                                 :avatar,
+                                                 :name,
+                                                 :passport,
+                                                 :birthdate]
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.for(:account_update) << :role_id
-    devise_parameter_sanitizer.for(:account_update) << :store_name
-    devise_parameter_sanitizer.for(:account_update) << :avatar
-    devise_parameter_sanitizer.for(:account_update) << :name
-    devise_parameter_sanitizer.for(:account_update) << :passport
-    devise_parameter_sanitizer.for(:account_update) << :birthdate
+    devise_parameter_sanitizer.for(:account_update) << [:role_id,
+                                                        :store_name,
+                                                        :avatar,
+                                                        :name,
+                                                        :passport,
+                                                        :birthdate]
   end
 
   # The path used after sign up.
