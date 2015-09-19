@@ -24,40 +24,58 @@ class User < ActiveRecord::Base
   validates_attachment_size :passport, less_than: 4.megabytes
 
   # Validations for different user roles
-  validate :password_length
-  validates :name, presence: true, if: -> { role.name == 'admin' }
-  validates :avatar, presence: true,
-            if: -> { %w(admin owner).include? role.name }
-  validates :passport, presence: true, if: -> { role.name == 'admin' }
-  validates :birthdate, presence: true, if: -> { role.name == 'admin' }
+  validate :password_length_on_create, on: [:create]
+  validate :password_length_on_update, on: [:update]
+  validates :name, presence: true, if: :is_admin?
+# FIXME: Not working avatar for 'owner' roles
+#  validates :avatar, presence: true,
+#            if: -> { %w(admin owner).include? role.name }
+#  validates :avatar, attachment_presence: true,
+#            if: -> { %w(admin owner).include? Role.find_by(id: role_id) }
+  validates :avatar, attachment_presence: true, if: :is_owner?
+  validates :avatar, attachment_presence: true, if: :is_admin?
+  validates :passport, attachment_presence: true, if: :is_admin?
+  validates :birthdate, presence: true, if: :is_admin?
+  validates :store_name, presence: true, if: :is_owner?
 
   has_many :products
   belongs_to :role
-  has_one :store
 
   before_validation :set_default_role, on: :create
 
-  def store_name=(name)
-    create_store(name: name) unless store
-    store.name = name if store
-  end
-
-  def store_name
-    store.name if store
-  end
-
   private
+
+  def is_owner?
+    Role.find_by(role_id).name == 'owner'
+  end
+
+  def is_admin?
+    Role.find_by(role_id).name == 'admin'
+  end
+
+  def is_guest?
+    Role.find_by(role_id).name == 'guest'
+  end
 
   def set_default_role
     self.role ||= Role.find_by_name('guest')
   end
 
-  def password_length
+  def password_length_on_create
     # TODO: move minimum password length to database
     roles = { 'guest' => 6, 'owner' => 8, 'admin' => 10 }
     errors.add(
       :password,
       "min length is #{roles[role.name]}"
     ) if password.length < roles[role.name]
+  end
+
+  def password_length_on_update
+    # TODO: move minimum password length to database
+    roles = { 'guest' => 6, 'owner' => 8, 'admin' => 10 }
+    errors.add(
+        :password,
+        "min length is #{roles[role.name]}"
+    ) if password.present? &&  password.length < roles[role.name]
   end
 end

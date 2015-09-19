@@ -1,23 +1,24 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_filter :configure_sign_up_params, only: [:create]
-# before_filter :configure_account_update_params, only: [:update]
+  before_filter :configure_account_update_params, only: [:update]
+
+  before_action :set_roles_password_length
 
   # GET /resource/sign_up
-  def new
-    @roles_password_length = { 'guest' => 6, 'owner' => 8, 'admin' => 10 }
-    super
-  end
+  #def new
+  #  super
+  #end
 
   # POST /resource
-  def create
-    @roles_password_length = { 'guest' => 6, 'owner' => 8, 'admin' => 10 }
-    super
-  end
+  #def create
+  #  super
+  #end
 
   # GET /resource/edit
-  # def edit
-  #   super
-  # end
+  def edit
+    @role = current_user.role.name
+    super
+  end
 
   # PUT /resource
   # def update
@@ -38,7 +39,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
+
+  def set_roles_password_length
+    @roles_password_length = { 'guest' => 6, 'owner' => 8, 'admin' => 10 }
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
@@ -51,9 +56,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   # If you have extra params to permit, append them to the sanitizer.
-  # def configure_account_update_params
-  #   devise_parameter_sanitizer.for(:account_update) << :attribute
-  # end
+  def configure_account_update_params
+    devise_parameter_sanitizer.for(:account_update) << :role_id
+    devise_parameter_sanitizer.for(:account_update) << :store_name
+    devise_parameter_sanitizer.for(:account_update) << :avatar
+    devise_parameter_sanitizer.for(:account_update) << :name
+    devise_parameter_sanitizer.for(:account_update) << :passport
+    devise_parameter_sanitizer.for(:account_update) << :birthdate
+  end
 
   # The path used after sign up.
   # def after_sign_up_path_for(resource)

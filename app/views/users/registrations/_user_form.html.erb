@@ -1,19 +1,32 @@
+<%
+   method = 'post' if action_name == 'new'
+   method = 'put' if action_name == 'edit'
+%>
+
 <%= form_for resource, as: resource_name,
              url: registration_path(resource_name),
-             html: { multipart: true, class: 'form-horizontal' } do |f| %>
+             html: { multipart: true,
+                     method: method,
+                     class: 'form-horizontal' } do |f| %>
+
   <%= f.hidden_field :role_id, value: Role.find_by(name: role).id %>
 
-  <% if %w(guest).include? role %>
+<% if action_name == 'new' %>
+  <% if %w(guest).include? role && action_name == 'new' %>
     <p>Для регистрации в качестве гостя-кошатника заполните следующую форму</p>
   <% end %>
 
-  <% if %w(owner).include? role %>
+  <% if %w(owner).include? role && action_name == 'new' %>
     <p>Для регистрации в качестве владельца котофермы заполните следующую форму</p>
   <% end %>
 
-  <% if %w(admin).include? role %>
+  <% if %w(admin).include? role && action_name == 'new' %>
     <p>Для регистрации в качестве админа всея котов заполните следующую форму</p>
   <% end %>
+
+<% elsif action_name == 'edit' %>
+    <p>&nbsp;</p>
+<% end %>
 
   <%= devise_error_messages! %>
 
@@ -26,6 +39,7 @@
   </div>
 
   <div class="form-group">
+    <% if action_name == 'new' %>
     <%= f.label :password, 'Пароль', class: 'col-sm-3 control-label' %>
     <div class="col-sm-8">
       <%= f.password_field :password, class: 'form-control',
@@ -34,6 +48,16 @@
                            'data-placement': "top",
                            title: "Минимум #{@roles_password_length[role]} символов"%>
     </div>
+    <% elsif action_name == 'edit' %>
+      <%= f.label :password, 'Новый пароль', class: 'col-sm-3 control-label' %>
+      <div class="col-sm-8">
+        <%= f.password_field :password, class: 'form-control',
+                             placeholder: 'Новый пароль', autocomplete: "off",
+                             'data-toggle': "tooltip",
+                             'data-placement': "top",
+                             title: "Заполните это поле только если хотите изменить пароль. Минимум #{@roles_password_length[role]} символов"%>
+      </div>
+    <% end %>
   </div>
 
   <div class="form-group">
@@ -41,29 +65,27 @@
                 class: 'col-sm-3 control-label' %>
     <div class="col-sm-8">
       <%= f.password_field :password_confirmation, class: 'form-control',
-                           placeholder: 'Подтверждение пароля',
-                           autocomplete: "off" %>
+                           placeholder: 'Подтверждение пароля' %>
     </div>
   </div>
 
 
-<% if %w(admin).include? role %>
   <div class="form-group">
     <%= f.label :name, 'Имя', class: 'col-sm-3 control-label' %>
     <div class="col-sm-8">
       <%= f.text_field :name, class: 'form-control',
-                       placeholder: 'Имя и Фамилия',
-                       autocomplete: 'off' %>
+                       placeholder: 'Имя и Фамилия' %>
     </div>
   </div>
+
+<% if %w(admin).include? role %>
 
   <div class="form-group">
     <%= f.label :birthdate, 'Дата рождения', class: 'col-sm-3 control-label' %>
     <div class="col-sm-8">
       <div class="input-group date">
         <%= f.text_field :birthdate, class: 'form-control',
-                         placeholder: 'Дата рождения',
-                         autocomplete: 'off' %>
+                         placeholder: 'Дата рождения' %>
         <span class="input-group-addon">
           <i class="glyphicon glyphicon-th"></i>
         </span>
@@ -78,8 +100,7 @@
     <%= f.label :store_name, 'Котоферма', class: 'col-sm-3 control-label' %>
     <div class="col-sm-8">
       <%= f.text_field :store_name, class: 'form-control',
-                       placeholder: 'Название котофермы',
-                       autocomplete: "off" %>
+                       placeholder: 'Название котофермы' %>
     </div>
   </div>
 <% end %>
@@ -101,12 +122,39 @@
     </div>
   </div>
 <% end %>
-
+<% if action_name == 'edit' %>
+  <div class="form-group">
+    <%= f.label :current_password, 'Ваш пароль', class: 'col-sm-3 control-label' %>
+    <div class="col-sm-8">
+      <%= f.password_field :current_password,
+                           class: 'form-control',
+                           placeholder: 'Текущий пароль',
+                           'data-toggle': "tooltip",
+                           'data-placement': "top",
+                           title: 'Введите ваш пароль для подтверждения изменений',
+                           autocomplete: "off" %>
+    </div>
+  </div>
+<% end %>
   <div class="form-group">
     <div class="col-sm-offset-3 col-sm-8">
-      <%= f.submit 'Регистрация', class: 'btn btn-success' %>
+      <% if action_name == 'new' || action_name == 'create' %>
+        <%= f.submit 'Регистрация', class: 'btn btn-success' %>
+      <% elsif action_name == 'edit' || action_name == 'update' %>
+        <%= f.submit 'Сохранить', class: 'btn btn-success' %>
+      <% end %>
     </div>
   </div>
 <% end %>
 
+<div class="col-sm-offset-3 col-sm-8">
+<% if action_name == 'new' %>
 <%= render "devise/shared/links" %>
+<% elsif action_name == 'edit' %>
+<h3>Удалиться</h3>
+
+<p>Разлюбили котов? <%= button_to "Удалить аккаунт", registration_path(resource_name), data: { confirm: "Точняк?" }, method: :delete %></p>
+
+<%= link_to "Назад", :back %>
+<% end %>
+</div>

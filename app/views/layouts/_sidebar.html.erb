@@ -11,11 +11,12 @@
   <%= current_user.name != '' ? current_user.name : current_user.email %>
   <% if %w(owner).include? current_user.role.name %>
     <br>
-    <%= current_user.store.name %>
+    <%= current_user.store_name %>
   <% end %>
 </h4>
 
 <ul class="list-unstyled">
+  <li><%= link_to 'Редактировать профиль', edit_user_registration_path %></li>
   <% if %w(owner).include? current_user.role.name %>
   <li><%= link_to 'Добавить котика', new_product_path %></li>
   <% end %>

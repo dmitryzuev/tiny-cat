@@ -5,7 +5,6 @@ class ProductsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :check_access, only: [:edit, :update, :destroy]
   before_action :is_owner, only: [:new, :create]
-  before_action :add_store, only: [:create, :update]
 
   def index
     @products = Product.all
@@ -26,7 +25,6 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     @product.user = current_user
-    @product.store = current_user.store
 
     if @product.valid? && @product.save
       redirect_to @product
@@ -66,13 +64,9 @@ class ProductsController < ApplicationController
     end
   end
 
-  def add_store
-    params[:store] = current_user.store
-  end
-
   private
 
   def product_params
-    params.require(:product).permit(:name, :description, :photo, :store)
+    params.require(:product).permit(:name, :description, :photo)
   end
 end
