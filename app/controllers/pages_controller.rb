@@ -3,6 +3,6 @@ class PagesController < ApplicationController
   def welcome
     redirect_to products_path if user_signed_in?
 
-    @products = Product.last(6)
+    @products = Product.where(pro: false).last(6)
   end
 end

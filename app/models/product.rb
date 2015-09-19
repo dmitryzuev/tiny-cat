@@ -12,4 +12,8 @@ class Product < ActiveRecord::Base
                             hash_secret: 'da9a3c0d2aaf25d6bb627051fd2cf9a4'
   validates_attachment_content_type :photo, content_type: %r/\Aimage\/.*\Z/
   validates_attachment_size :photo, less_than: 4.megabytes
+
+  def is_pro?
+    pro
+  end
 end

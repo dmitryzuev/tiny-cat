@@ -43,19 +43,19 @@ class User < ActiveRecord::Base
 
   before_validation :set_default_role, on: :create
 
-  private
-
   def is_owner?
-    Role.find_by(role_id).name == 'owner'
+    Role.find_by(id: role_id).name == 'owner'
   end
 
   def is_admin?
-    Role.find_by(role_id).name == 'admin'
+    Role.find_by(id: role_id).name == 'admin'
   end
 
   def is_guest?
-    Role.find_by(role_id).name == 'guest'
+    Role.find_by(id: role_id).name == 'guest'
   end
+
+  private
 
   def set_default_role
     self.role ||= Role.find_by_name('guest')

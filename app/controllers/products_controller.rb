@@ -7,7 +7,8 @@ class ProductsController < ApplicationController
   before_action :is_owner, only: [:new, :create]
 
   def index
-    @products = Product.all
+    @products = Product.all if user_signed_in?
+    @products = Product.where(pro: false) unless user_signed_in?
   end
 
   def show
@@ -45,6 +46,15 @@ class ProductsController < ApplicationController
     end
   end
 
+  def toggle_pro
+    redirect_to products_url unless current_user.is_admin?
+
+    @product = Product.find(params[:id])
+    @product.pro = !@product.pro
+    @product.save
+    redirect_to @product
+  end
+
   def destroy
     Product.find(params[:id]).destroy
     redirect_to products_url
@@ -67,6 +77,6 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:name, :description, :photo)
+    params.require(:product).permit(:name, :description, :photo, :is_pro)
   end
 end

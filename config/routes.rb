@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   resources :products
 
+  put 'products/:id/toggle_pro' => 'products#toggle_pro', as: :toggle_pro_product
+
   root 'pages#welcome'
 
   # devise_for :users

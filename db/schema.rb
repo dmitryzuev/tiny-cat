@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150917183129) do
+ActiveRecord::Schema.define(version: 20150919135046) do
 
   create_table "products", force: :cascade do |t|
     t.string   "name"
@@ -21,8 +21,9 @@ ActiveRecord::Schema.define(version: 20150917183129) do
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.boolean  "pro",                default: false
   end
 
   add_index "products", ["user_id"], name: "index_products_on_user_id"

@@ -1,4 +1,18 @@
-<h1>Котик <%= @product.name %></h1>
+<% if @product.is_pro? && !user_signed_in? %>
+
+  <h1>Вы должны быть
+    <%= link_to 'зарегистрированы', new_user_registration_path %>
+    для просмотра этого котика</h1>
+  <h2>Этот котик — БРО</h2>
+
+<% else %>
+
+<h1>
+  Котик <%= @product.name %>
+  <% if @product.is_pro? %>
+    <i class="glyphicon glyphicon-star"></i> БРО
+  <% end %>
+</h1>
 
 <% if current_user == @product.user %>
 <div class="actions btn-group-vertical" role="group">
@@ -7,6 +21,22 @@
   <% end %>
   <%= link_to product_path(@product), method: 'delete', title: 'Уничтожить', class: 'btn btn-default btn-xs' do %>
   Уничтожить <i class="glyphicon glyphicon-trash"></i>
+  <% end %>
+</div>
+<% end %>
+
+<% if user_signed_in? && current_user.is_admin? %>
+<div class="actions btn-group-vertical" role="group">
+  <%= link_to toggle_pro_product_path(@product),
+              title: 'Сделать про',
+              method: 'put',
+              class: 'btn btn-default btn-xs' do %>
+    <% if @product.is_pro? %>
+      Не бро
+    <% else %>
+      Бро
+    <% end %>
+    <i class="glyphicon glyphicon-star"></i>
   <% end %>
 </div>
 <% end %>
@@ -21,3 +51,10 @@
   <strong>Автор:</strong> <%= (@product.user.name != '') ? @product.user.name : @product.user.email %>
 </div>
 
+<% if user_signed_in? && (current_user.is_admin? || current_user.is_owner?) %>
+<div class="author-shop">
+  <strong>Котоферма:</strong> <%= @product.user.store_name %>
+</div>
+<% end %>
+
+<% end %>
