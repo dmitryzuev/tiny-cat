@@ -1,0 +1,10 @@
+<h1>Мяу<% unless @user.name == '' %>, <%= @user.name %><% end %>!</h1>
+
+<p>
+  Поздравляем с покупкой замечательного кота <%= @product.name %>.
+</p>
+
+<p>
+  Вы только посмотрите как он прекрасен:<br>
+  <%= image_tag attachments['product.jpg'].url %>
+</p>

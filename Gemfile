@@ -62,3 +62,6 @@ gem 'bootstrap-sass', '~> 3.3.5'
 
 # Uploads handling gem
 gem "paperclip", "~> 4.3"
+
+# Figuring out http
+gem 'httparty'
