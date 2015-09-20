@@ -4,10 +4,15 @@ class PlaceOrderJob < ActiveJob::Base
 
   def perform(user, product)
     photo = retrieve_photo
-
     photo_file = retrieve_photo_file photo
+    todo_id = retrieve_todo
+
     UserMailer.order_placed_email(user, product, photo_file)
-      .deliver_later if photo_ok? photo
+      .deliver_now if photo_ok? photo
+    AdminMailer.order_placed_email(todo_id)
+      .deliver_now if photo_ok? photo
+    AdminMailer.order_failed_email(user)
+      .deliver_now unless photo_ok? photo
   end
 
   def retrieve_photo
@@ -21,6 +26,10 @@ class PlaceOrderJob < ActiveJob::Base
   end
 
   def retrieve_photo_file(photo)
-    HTTParty.get(photo['url']).body
+    HTTParty.get(photo['url']).parsed_response
+  end
+
+  def retrieve_todo
+    HTTParty.post('http://jsonplaceholder.typicode.com/todos')['id']
   end
 end

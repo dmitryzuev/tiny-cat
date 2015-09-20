@@ -41,7 +41,7 @@
 </div>
 <% end %>
 
-<% if user_signed_in? && current_user.guest? %>
+<% if user_signed_in? && current_user.guest? && !@product.pro? %>
 <div class="actions btn-group-vertical" role="group">
   <%= link_to order_product_path(@product),
               title: 'Купить котеньку',
