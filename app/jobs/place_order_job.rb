@@ -7,7 +7,7 @@ class PlaceOrderJob < ActiveJob::Base
 
     photo_file = retrieve_photo_file photo
     UserMailer.order_placed_email(user, product, photo_file)
-      .deliver_now if photo_ok? photo
+      .deliver_later if photo_ok? photo
   end
 
   def retrieve_photo
