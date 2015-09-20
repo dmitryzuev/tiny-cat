@@ -41,6 +41,19 @@
 </div>
 <% end %>
 
+<% if user_signed_in? && current_user.guest? %>
+<div class="actions btn-group-vertical" role="group">
+  <%= link_to order_product_path(@product),
+              title: 'Купить котеньку',
+              method: 'put',
+              class: 'btn btn-default btn-xs' do %>
+    Купить котеньку
+    <i class="glyphicon glyphicon-shopping-cart"></i>
+  <% end %>
+</div>
+<% end %>
+
+
 <%= image_tag @product.photo.url(:medium) %>
 
 <div class='description'>
