@@ -18,7 +18,7 @@
 
 Во-вторых, выполните следующие команды
 
-```
+```bash
 rake db:create # Если база данных ещё не создана
 rake db:migrate
 rake db:seed
