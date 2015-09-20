@@ -5,8 +5,10 @@ class OrdersController < ApplicationController
   def order
     product = Product.find params[:id]
 
-    flash[:order_fail] = "Вам нельзя покупать котенек" if email_com?
-    redirect_to product_path(product) and return if email_com?
+    if email_com?
+      flash[:order_fail] = 'Вам нельзя покупать котенек'
+      redirect_to product_path(product) && return
+    end
 
     PlaceOrderJob.perform_later current_user, product
     flash[:order_placed] = "Запрос на покупку котеньки отправлен!

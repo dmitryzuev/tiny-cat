@@ -1,14 +1,13 @@
+# Mailer to perform user-related emails
 class UserMailer < ApplicationMailer
-  default from: 'Tiny Cat <tinycat@test.com>'
-
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
   #   en.user_mailer.order_placed_email.subject
   #
-  # user — User model object
-  # product — Product model object
-  # photo — just photography read from some sorce
+  # user - User model object
+  # product - Product model object
+  # photo - just photography read from some sorce
   def order_placed_email(user, product, photo)
     @user = user
     @product = product

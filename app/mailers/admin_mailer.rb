@@ -1,7 +1,6 @@
 # Mailer for admin users
 class AdminMailer < ApplicationMailer
-  default to: proc { get_admin_emails },
-          from: 'Tiny Cat <tinycat@test.com>'
+  default to: proc { admin_emails }
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
@@ -22,12 +21,12 @@ class AdminMailer < ApplicationMailer
   def order_failed_email(user)
     @user = user
 
-    mail subject: "Не удалось купить кота"
+    mail subject: 'Не удалось купить кота'
   end
 
   private
 
-  def get_admin_emails
+  def admin_emails
     User.where(role: Role.find_by(name: 'admin')).pluck(:email)
   end
 end
