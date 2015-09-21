@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   put 'products/:id/toggle_pro' => 'products#toggle_pro', as: :toggle_pro_product
 
+  put 'order/:id' => 'orders#order', as: :order_product
+
   root 'pages#welcome'
 
   # devise_for :users

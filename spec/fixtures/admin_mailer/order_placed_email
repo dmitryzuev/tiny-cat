@@ -1,0 +1,3 @@
+AdminMailer#order_placed_email
+
+Hi, find me in app/views/admin_mailer/order_placed_email
