@@ -24,6 +24,10 @@ class AdminMailer < ApplicationMailer
     mail subject: 'Не удалось купить кота'
   end
 
+  def order_too_long_email
+    mail subject: 'Слишком большая задержка при покупке'
+  end
+
   private
 
   def admin_emails

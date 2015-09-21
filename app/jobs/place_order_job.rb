@@ -3,17 +3,21 @@ class PlaceOrderJob < ActiveJob::Base
   queue_as :default
 
   rescue_from(RuntimeError) do |error|
-    retry_job wait: 5.minutes
+    if error.message == 'post_error'
+      AdminMailer.order_too_long_email.deliver_now
+    end
   end
 
-  def perform(user, product, attempt = 1)
+  def perform(user, product, _attempt = 1)
     delay = rand 0.0..6.0
 
-    sleep 3 && fail 'get_error' if rand > 3
+    sleep 3 if delay > 3
+    fail 'get_error' if delay > 3
+
     sleep delay
     photo = retrieve_photo
     photo_file = retrieve_photo_file photo
-    
+
     UserMailer.order_placed_email(user, product, photo_file)
       .deliver_now if photo_ok? photo
     AdminMailer.order_failed_email(user)
