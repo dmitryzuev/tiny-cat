@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/dmitryzuev/tiny-cat.png?label=ready&title=Ready)](https://waffle.io/dmitryzuev/tiny-cat)
 # Tiny Cat
 
 > Soft Kitty, Warm Kitty,
