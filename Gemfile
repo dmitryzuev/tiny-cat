@@ -67,4 +67,4 @@ gem "paperclip", "~> 4.3"
 gem 'httparty'
 
 # Jobs with sidekiq
-gem 'sidekiq'
+# gem 'sidekiq'

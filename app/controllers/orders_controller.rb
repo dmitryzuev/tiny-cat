@@ -10,10 +10,16 @@ class OrdersController < ApplicationController
       redirect_to product_path(product) && return
     end
 
-    PlaceOrderJob.perform_later current_user, product
+    OrderService.new current_user, product
+
     flash[:order_placed] = "Запрос на покупку котеньки отправлен!
                             В случае успеха ждите письмо \xF0\x9F\x98\x8A"
     redirect_to product_path(product)
+  rescue => e
+    @error_messages ||= []
+    @error_messages << e
+    @product = product
+    render 'products/show'
   end
 
   private
